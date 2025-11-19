@@ -181,24 +181,34 @@ a:hover,a:focus{
   © 2025 KOOLni — Semua hak cipta dilindungi.
 </footer>
 <script>
-var adLoaded = false;
+let adLoaded = false;
+
 function loadAd() {
-if (adLoaded) return;
-adLoaded = true;
-const s = document.createElement('script');
-s.src = 'https://fpyf8.com/88/tag.min.js';
-s.setAttribute('data-zone','186185');
-s.setAttribute('async','');
-s.setAttribute('data-cfasync','false');
-document.body.appendChild(s);
+    if (adLoaded) return;
+    adLoaded = true;
+
+    const s = document.createElement('script');
+    s.src = 'https://fpyf8.com/88/tag.min.js';
+    s.async = true;
+    s.setAttribute('data-zone','186185');
+    s.setAttribute('data-cfasync','false');
+    document.body.appendChild(s);
 }
-window.addEventListener('scroll', loadAd, { once: true });
-window.addEventListener("pageshow", function(e) {
-if (e.persisted) {
-adLoaded = false; // reset
-loadAd();         // muat ulang iklan
-}
+
+// Trigger hanya sekali setelah user interaksi
+const userEvents = ['scroll', 'click', 'touchstart'];
+
+userEvents.forEach(ev => {
+    window.addEventListener(ev, loadAd, { once: true });
+});
+
+// Untuk iPhone/iPad agar tidak reload dua kali saat back-forward cache
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        adLoaded = false;
+    }
 });
 </script>
+
 </body>
 </html>
